@@ -1,0 +1,47 @@
+services:
+  # App
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: repo-list-app
+    container_name: repo-list-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    networks:
+      - repo-network
+
+  # Nginx
+  web:
+    image: nginx:alpine
+    container_name: repo-list-web
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - repo-network
+
+  # MySQL
+  db:
+    image: mysql:5.7
+    container_name: repo-list-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: password
+      MYSQL_USER: laraveluser
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
+    ports:
+      - "3306:3306"
+    networks:
+      - repo-network
+
+networks:
+  repo-network:
+    driver: bridge

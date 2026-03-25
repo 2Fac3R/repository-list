@@ -9,42 +9,22 @@ Stack:
 * Testing Framework: PHPUnit
 * HTML (Blade Templates) + CSS (TailwindCSS Framework)
 
-## Installation
+## One-Time Setup
 
-Clone the repository
+1. Copy the `.env.example` file to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+2. Update `.env` with your desired configuration (`DB_HOST=db`, etc.).
+3. Generate the application key:
+   ```bash
+   docker compose exec app php artisan key:generate
+   ```
+4. Run migrations and seed the database:
+   ```bash
+   docker compose exec app php artisan migrate --seed
+   ```
 
-    git clone https://github.com/2Fac3R/repository-list.git
-
-Switch to the repo folder
-
-    cd repository-list
-
-Install all the dependencies using composer
-
-    composer install
-
-Rename ".env.example" to ".env" and add your database settings.
-    
-    DB_CONNECTION=mysql
-    DB_HOST=127.0.0.1
-    DB_PORT=3306
-    DB_DATABASE=<your-database>
-    DB_USERNAME=<your-username>
-    DB_PASSWORD=<your-password>
-
-Run migrations
-
-    php artisan migrate
-
-Run seeder (this will create 40 repositories)
-
-    php artisan db:seed
-
-Start the local development server
-
-    php artisan serve
-
-You can now access the server at http://127.0.0.1:8000/ (you will see all 40 repos we created before)
 
 ## Usage
 
